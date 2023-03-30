@@ -23,5 +23,6 @@ class Transform(object):
         pool.close()
         return res
 
+    # TODO: implement save function
     def save(self, img, path):
         pass
