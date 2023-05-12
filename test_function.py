@@ -10,12 +10,14 @@ from core.CosineDistortTransform import CosineDistortTransform
 from core.RandomOverlayTransform import RandomOverlayTransform
 from core.PaddingTransform import PaddingTransform
 from core.ElasticDistortionTransform import ElasticDistortionTransform
+from core.JPEGNoiseTransform import JPEGNoiseTransform
+from core.RandomRotationTransform import RandomRotationTransform
+from core.ColorJitterTransform import ColorJitterTransform
 
 
 if __name__ == "__main__":
-
     img = cv2.imread("./sample-image/20221212_143203_84.png")
-    transform = Transform([ElasticDistortionTransform(
-        alpha=img.shape[0] * 2, sigma=img.shape[0] * 0.08, alpha_affine=img.shape[0] * 0.08)])
-    new_img = transform.transform(img)
+    transform = Transform([ColorJitterTransform(), RandomRotationTransform()])
+    # new_img = transform.transform(img)
+    new_img = transform.random_apply_with_probs(img, probs=[0.1, 0.5])
     cv2.imwrite("./result-image/result.jpg", new_img)
